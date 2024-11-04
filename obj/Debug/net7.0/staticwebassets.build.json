@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "oTfYJIQbBazaf6D44dzWWtBWrkHK48HMH1SMl/WryFs=",
+  "Source": "TemperatureMonitoring",
+  "BasePath": "_content/TemperatureMonitoring",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
