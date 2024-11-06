@@ -1,10 +1,10 @@
-// SensorResponseDto.cs
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace TemperatureMonitoring.Models
 {
+    // DTO voor het overdragen van sensorgegevens naar de frontend
     public class SensorResponseDto
     {
         public int Id { get; set; }
@@ -25,6 +25,7 @@ namespace TemperatureMonitoring.Models
         public DateTime LastMeasurementTimestamp { get; set; }
     }
 
+    // DTO voor een enkele meting, zoals temperatuur of luchtvochtigheid
     public class MeasurementDto
     {
         [JsonPropertyName("type")]
@@ -40,6 +41,7 @@ namespace TemperatureMonitoring.Models
         public DateTime Timestamp { get; set; }
     }
 
+    // DTO voor aggregatiewaarden, waaronder maximale en minimale waarden
     public class AggregationsDto
     {
         [JsonPropertyName("temperature")]
@@ -49,6 +51,7 @@ namespace TemperatureMonitoring.Models
         public MinMaxDto Humidity { get; set; }
     }
 
+    // DTO voor de dagelijkse minimum- en maximumwaarden
     public class MinMaxDto
     {
         [JsonPropertyName("max_today")]

@@ -11,6 +11,9 @@ namespace TemperatureMonitoring.Controllers
     {
         private readonly MockSensorService _mockSensorService;
 
+        // Constructor met Dependency Injection van MockSensorService,
+        // wat het Singleton-pattern ondersteunt. Dit garandeert één consistente instantie
+        // van MockSensorService voor de gehele applicatie, waardoor het delen van gegevens tussen controllers mogelijk is.
         public SensorController(MockSensorService mockSensorService)
         {
             _mockSensorService = mockSensorService;
@@ -19,11 +22,14 @@ namespace TemperatureMonitoring.Controllers
         [HttpGet]
         public IActionResult GetSensorData(string? name = null, string? serial_number = null)
         {
+            // Haal de mock sensorgegevens op via de facade in MockSensorService
             var sensors = _mockSensorService.GetMockSensors();
 
             if (name == null && serial_number == null)
             {
-                // No parameters provided, return all sensors
+                // Geen specifieke parameters opgegeven, retourneer alle sensoren.
+                // Dit maakt gebruik van de facade in MockSensorService, die de complexiteit
+                // van de interne logica en toegang tot verschillende gegevens abstracteert.
                 var allSensorsResponse = new
                 {
                     items = sensors.Select(s => new SensorResponseDto
@@ -60,17 +66,20 @@ namespace TemperatureMonitoring.Controllers
                 return Ok(allSensorsResponse);
             }
 
-            // Search for a specific sensor by `name` or `serial_number`
+            // Zoek een specifieke sensor door `name` of `serial_number`
+            // Dit laat een zoekfunctionaliteit zien waarbij de gegevens binnen MockSensorService
+            // toegankelijk zijn via een enkelvoudige interface.
             var result = sensors.FirstOrDefault(s =>
                 (name != null && s.Name == name) ||
                 (serial_number != null && s.SerialNumber == serial_number));
 
             if (result == null)
             {
+                // Retoureer een 404-fout als de sensor niet gevonden is
                 return NotFound(new { message = "Sensor not found" });
             }
 
-            // Map the found sensor to a response
+            // Map de gevonden sensor naar een response
             var singleSensorResponse = new
             {
                 items = new[]

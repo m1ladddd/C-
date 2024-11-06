@@ -1,10 +1,25 @@
-namespace TemperatureMonitoring.Models
+using System;
+using System.IO;
+
+namespace TemperatureMonitoring
 {
-    public class Logger : ISensorDataObserver
+    public static class Logger
     {
-        public void Update(float temperature, float humidity, float battery)
+        private static readonly string logFilePath = "log.txt";
+
+        // Methode om berichten naar een logbestand te schrijven
+        public static void Log(string message)
         {
-            Console.WriteLine($"Temperature: {temperature}, Humidity: {humidity}, Battery: {battery}");
+            using (StreamWriter writer = new StreamWriter(logFilePath, true))
+            {
+                writer.WriteLine($"{DateTime.UtcNow}: {message}");
+            }
+        }
+
+        // Methode om fouten te loggen
+        public static void LogError(Exception ex)
+        {
+            Log($"ERROR: {ex.Message}\nStackTrace: {ex.StackTrace}");
         }
     }
 }
